@@ -1,0 +1,43 @@
+.cell {
+  border: 3px solid gray;
+  list-style-type: none;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.lg-100 {
+  width: calc(100% / 10);
+  aspect-ratio: 1/1;
+}
+
+.lg-81 {
+  width: calc(100% / 9);
+  aspect-ratio: 1/1;
+}
+
+.lg-49 {
+  width: calc(100% / 7);
+  aspect-ratio: 1/1;
+}
+
+#cell-group {
+  margin: 0 auto;
+  width: 600px;
+  aspect-ratio: 1/1;
+  padding: 0;
+}
+#global-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cell-active {
+  background-color: lightblue;
+}
+
+#global-container > * {
+  margin: 5px;
+}
