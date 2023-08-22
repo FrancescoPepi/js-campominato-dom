@@ -7,7 +7,8 @@ const difficulty = document.getElementById("difficulty");
 playButton.addEventListener("click", function () {
   let cellsTotal = parseInt(difficulty.value);
 
-  gridGenerate(cellsTotal, cellContainer);
+  const bombList = generateBombList(cellsTotal);
+  gridGenerate(cellsTotal, cellContainer, bombList);
 });
 
 /**
@@ -15,15 +16,14 @@ playButton.addEventListener("click", function () {
  * @param {int} cellsTotal quantità di celle da creare
  * @param {tagContainer} cellsContainer DOC Contenitore per i cuby
  */
-function gridGenerate(cellsTotal, cellContainer) {
+function gridGenerate(cellsTotal, cellContainer, bombList) {
   cellContainer.innerHTML = "";
   const whiteList = generateArray(1, cellsTotal, 1);
   for (let i = 1; i <= cellsTotal; i++) {
     const randomIndex = randomNumber(0, whiteList.length - 1);
     const cellValue = whiteList[randomIndex];
-    cellCreation(cellsTotal, cellValue);
+    cellCreation(cellsTotal, cellValue, bombList);
     whiteList.splice(randomIndex, 1);
-    console.log(whiteList + " poi random " + randomIndex);
   }
 }
 /**
@@ -31,26 +31,53 @@ function gridGenerate(cellsTotal, cellContainer) {
  * @param {int} cellsTotal serve per fornire la grandezza del cubo
  * @param {int} i serve per dare un index ad ogni cella
  */
-function cellCreation(cellsTotal, cellValue) {
+function cellCreation(cellsTotal, cellValue, bombList) {
+  const whiteList2 = [];
   const cell = document.createElement("li");
   cell.setAttribute("data-index", cellValue);
   cell.classList.add("cell");
   cell.classList.add("lg-" + cellsTotal);
+  // cell.addEventListener("click", function () {
+  //   if (cell.innerText == "") {
+  //     const index = parseInt(this.getAttribute("data-index"));
+  //     this.innerText = index;
+  //     this.classList.toggle("cell-active");
+  //     console.log(this.innerHTML);
+  //   } else {
+  //     this.innerText = "";
+  //     this.classList.toggle("cell-active");
+  //   }
+  // });
+
+  // CONTROLLO BOMBA O NO
   cell.addEventListener("click", function () {
-    if (cell.innerText == "") {
-      const index = parseInt(this.getAttribute("data-index"));
-      this.innerText = index;
-      this.classList.toggle("cell-active");
-      console.log(this.innerHTML);
+    const index = parseInt(this.getAttribute("data-index"));
+    const whiteList2 = [];
+
+    if (bombList.includes(index)) {
+      // this.innerText = index;
+      this.classList.add("cell-bomb");
+      console.log(index + "è lui");
     } else {
-      this.innerText = "";
-      this.classList.toggle("cell-active");
+      // this.innerText = "";
+
+      this.classList.add("cell-active");
+      console.log(index + "non è lui");
+      whiteList2.push(index);
     }
+    console.log(whiteList2);
   });
   //   cell.innerText = randomNumber;
   cellContainer.appendChild(cell);
 }
 
+/**
+ * Funzione che crea la WhiteList
+ * @param {int} from start ciclo
+ * @param {int} to fine ciclo
+ * @param {int} step incremento
+ * @returns la WhiteList
+ */
 function generateArray(from, to, step) {
   const whiteList = [];
   for (let i = from; i <= to; i += step) {
@@ -58,6 +85,24 @@ function generateArray(from, to, step) {
   }
   return whiteList;
 }
-
+/**
+ * Funzione per creare un numero random
+ * @param {int} min
+ * @param {int} max
+ * @returns numero random
+ */
 const randomNumber = (min, max) =>
   Math.floor(Math.random() * (max - min + 1) + min);
+
+function generateBombList(cellsTotal) {
+  const bombList = [];
+  i = 0;
+  while (!(i == 16)) {
+    const randomNumber = Math.floor(Math.random() * (cellsTotal - 1 + 1) + 1);
+    if (!bombList.includes(randomNumber)) {
+      bombList.push(randomNumber);
+      i++;
+    }
+  }
+  return bombList;
+}

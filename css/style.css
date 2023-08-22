@@ -37,6 +37,9 @@
 .cell-active {
   background-color: lightblue;
 }
+.cell-bomb {
+  background-color: red;
+}
 
 #global-container > * {
   margin: 5px;
