@@ -5,9 +5,12 @@ const difficulty = document.getElementById("difficulty");
 
 // button start
 playButton.addEventListener("click", function () {
+  // # selezione della difficoltà
   let cellsTotal = parseInt(difficulty.value);
-
-  const bombList = generateBombList(cellsTotal);
+  // # creazione della lista bombe
+  const bombList = generateBombList(1, cellsTotal, 16);
+  console.log(bombList);
+  // # generatore della griglia
   gridGenerate(cellsTotal, cellContainer, bombList);
 });
 
@@ -94,14 +97,13 @@ function generateArray(from, to, step) {
 const randomNumber = (min, max) =>
   Math.floor(Math.random() * (max - min + 1) + min);
 
-function generateBombList(cellsTotal) {
+// FUNZIONE CHE CREA 16 VOLTE LE MOBME
+function generateBombList(min, max, qty) {
   const bombList = [];
-  i = 0;
-  while (!(i == 16)) {
-    const randomNumber = Math.floor(Math.random() * (cellsTotal - 1 + 1) + 1);
-    if (!bombList.includes(randomNumber)) {
-      bombList.push(randomNumber);
-      i++;
+  while (bombList.length < qty) {
+    const uniqueNumber = randomNumber(min, max);
+    if (!bombList.includes(uniqueNumber)) {
+      bombList.push(uniqueNumber);
     }
   }
   return bombList;
