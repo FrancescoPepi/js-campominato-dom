@@ -44,3 +44,10 @@
 #global-container > * {
   margin: 5px;
 }
+
+@media only screen and (max-width: 600px) {
+  #cell-group {
+    width: 300px;
+    aspect-ratio: 1/1;
+  }
+}

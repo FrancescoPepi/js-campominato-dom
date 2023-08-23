@@ -8,19 +8,23 @@ let cellsTotal, bombList, score, cellsNoBombs, isGameOver, msg;
 
 // button start
 playButton.addEventListener("click", function () {
-  msg = "";
-  // # inizializzazione isGameover
-  isGameOver = false;
   // # selezione della difficoltà
   cellsTotal = parseInt(difficulty.value);
-  // # creazione della lista bombe
-  bombList = generateBombList(1, cellsTotal, 16);
-  // # inizializzazione score
-  score = 0;
-  // # quantità celle non bombe
-  cellsNoBombs = cellsTotal - bombList.length;
-  // # generatore della griglia
-  gridGenerate(cellContainer);
+  if (isNaN(cellsTotal)) {
+    alert("seleziona una difficoltà");
+  } else {
+    msg = "";
+    // # inizializzazione isGameover
+    isGameOver = false;
+    // # creazione della lista bombe
+    bombList = generateBombList(1, cellsTotal, 16);
+    // # inizializzazione score
+    score = 0;
+    // # quantità celle non bombe
+    cellsNoBombs = cellsTotal - bombList.length;
+    // # generatore della griglia
+    gridGenerate(cellContainer);
+  }
 });
 
 /**
